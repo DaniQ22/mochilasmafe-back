@@ -19,6 +19,9 @@ async function bootstrap(): Promise<void> {
   );
 
   const frontendOrigins = process.env.FRONTEND_ORIGIN;
+
+  console.log('Configurando CORS con origen:', frontendOrigins);
+  
   app.enableCors({
     origin: frontendOrigins
       ? frontendOrigins.split(',').map((origin) => origin.trim())
