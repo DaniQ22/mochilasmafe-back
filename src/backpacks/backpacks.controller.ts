@@ -2,9 +2,11 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   UploadedFiles,
   UseGuards,
@@ -25,6 +27,13 @@ export class BackpacksController {
   @Get()
   findAll(): Promise<Backpack[]> {
     return this.backpacksService.findAll();
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id') id: string): Promise<void> {
+    return this.backpacksService.delete(id);
   }
 
   @Post()

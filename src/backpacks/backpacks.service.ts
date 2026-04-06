@@ -26,6 +26,19 @@ export class BackpacksService {
     );
   }
 
+  async delete(id: string): Promise<void> {
+    const backpacks = await this.readAll();
+    const index = backpacks.findIndex((b) => b.id === id);
+
+    if (index === -1) {
+      const { NotFoundException } = await import('@nestjs/common');
+      throw new NotFoundException('Mochila no encontrada.');
+    }
+
+    backpacks.splice(index, 1);
+    await this.writeAll(backpacks);
+  }
+
   async create(dto: CreateBackpackDto, imageUrls: string[]): Promise<Backpack> {
     const backpacks = await this.readAll();
     const now = new Date().toISOString();
